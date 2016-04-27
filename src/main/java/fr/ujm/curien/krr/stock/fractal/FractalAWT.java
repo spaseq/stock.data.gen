@@ -1,4 +1,5 @@
-package stock.price;
+package fr.ujm.curien.krr.stock.fractal;
+
 /*
  * 2D Fractal Terrain Generator
  * Generates terrain using the random midpoint displacement algorhythm.
@@ -25,44 +26,25 @@ package stock.price;
  */
 
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.util.Random;
 
-import javax.swing.JFrame;
-
+import javax.swing.WindowConstants;
 
 
-/**
- * Fractal frame. This is the window that will render the frame and the fractal.
- * 
- * @author danirod
- */
-public class FractalFrame extends JFrame
+
+public class FractalAWT
 {
-    private static final long serialVersionUID = 1L;
-    
-    private Fractal fractal;
-    private String name;
-    public FractalFrame(Fractal fractal, String name)
+    public static void main(String args[])
     {
-        this.fractal = fractal;
-        this.name=name;
-        init();
-      
-    }
-    
-    private void init()
-    {
-        // initialize window size and position
-        setPreferredSize(new Dimension(640, 360));
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dim.getWidth() - getWidth()) / 4);
-        int y = (int) ((dim.getHeight() - getHeight()) / 4);
-        // note that we just divided by 4, that makes the screen to center 
-        setLocation(x, y);
+        Fractal fractal = new Fractal();
+        Random rnd = new Random();
+        long seed = rnd.nextLong();
+        fractal.init(seed, 0, 0);
+        for(int i = 0; i < 20; i++)
+            fractal.iterate();
         
-        setTitle(this.name);
-        add(new FractalPanel(fractal)); // add the panel
-        pack();
+        FractalFrame ff = new FractalFrame(fractal, "FractalAWT");
+        ff.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        ff.setVisible(true);
     }
 }

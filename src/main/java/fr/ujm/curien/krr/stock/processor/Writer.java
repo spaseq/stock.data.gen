@@ -1,9 +1,12 @@
-package stock.price;
+package fr.ujm.curien.krr.stock.processor;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import fr.ujm.curien.krr.stock.bean.Stock;
+import fr.ujm.curien.krr.stock.generator.main.MainGenerator;
 
 public class Writer implements Runnable {
 	private BufferedWriter outputWriter, outputWriter1;
@@ -12,9 +15,8 @@ public class Writer implements Runnable {
 	int	nbfile=0;
 		// Initialize writer
 		try {
-			final String pathname = "data.txt";
-			outputWriter = new BufferedWriter(new FileWriter(new File(pathname)));
-			outputWriter1 = new BufferedWriter(new FileWriter(new File("epdata.txt")));
+			outputWriter = new BufferedWriter(new FileWriter(new File("stockdata.nt")));
+			outputWriter1 = new BufferedWriter(new FileWriter(new File("epstockdata.txt")));
 		} catch (final IOException e) {
 			//// logger.error("Cannot open output file for " + id, e);
 			e.printStackTrace();
@@ -25,7 +27,7 @@ public class Writer implements Runnable {
 		// Ecrire
 		while (true) {
 			try {
-				final Stock line = TestGen.toStringQueue.take();
+				final Stock line = MainGenerator.toStringQueue.take();
 				 
 				if (line.id != "EOF") {
 					writeLine(line);

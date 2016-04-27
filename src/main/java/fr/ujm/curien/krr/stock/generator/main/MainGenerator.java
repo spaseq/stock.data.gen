@@ -1,22 +1,22 @@
-package stock.price;
+package fr.ujm.curien.krr.stock.generator.main;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class TestGen {
+import fr.ujm.curien.krr.stock.bean.Stock;
+import fr.ujm.curien.krr.stock.processor.Generator;
+import fr.ujm.curien.krr.stock.processor.Writer;
+
+public class MainGenerator {
 public static 	LinkedBlockingQueue<Stock> toStringQueue= new LinkedBlockingQueue<>(100);
 public static void main(String[] args) throws IOException {
-	System.out.println("enter data size example 10");
+
+	
+	System.out.println("enter data size : example 5 to generate ~= 200 triples");
 
 	int datasize= Integer.parseInt(args[0]);
-	File file = new File("data.txt");
 
-	// if file doesnt exists, then create it
-	if (!file.exists()) {
-		file.createNewFile();
-	} 
-	
 	new Generator("eBay", 14,datasize).start();
 	new Generator("Paypal", 14,datasize).start();
 	new Generator("Google",14,datasize).start();

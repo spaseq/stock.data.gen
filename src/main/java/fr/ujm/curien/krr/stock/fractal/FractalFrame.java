@@ -1,5 +1,4 @@
-package stock.price;
-
+package fr.ujm.curien.krr.stock.fractal;
 /*
  * 2D Fractal Terrain Generator
  * Generates terrain using the random midpoint displacement algorhythm.
@@ -25,54 +24,45 @@ package stock.price;
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
-import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
+
 
 /**
- * Panel for rendering fractals.
+ * Fractal frame. This is the window that will render the frame and the fractal.
  * 
  * @author danirod
  */
-public class FractalPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-
-	private Fractal f;
-
-	public FractalPanel(Fractal f) {
-		this.f = f;
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-
-		// Initialise some variables that we will use.
-		Graphics2D gInstance = (Graphics2D) g;
-		int width = getWidth(), height = getHeight();
-
-		double[] data = f.getValues(); // actual data we'll be plotting
-		float sep = (float) width / (data.length - 1); // point separation
-
-		// Render all the points in groups of 2.
-		Point pixel0 = new Point(), pixel1 = new Point();
-		for (int k = 0; k < data.length - 1; k++) {
-			// Get pixel coordinates for this point.
-			pixel0.x = (int) (sep * k);
-			pixel0.y = (int) (height / 2 - (float) data[k] * height / 2);
-
-			// Get pixel coordinates for the next point
-			pixel1.x = (int) (sep * (k + 1));
-			pixel1.y = (int) (height / 2 - (float) data[k + 1] * height / 2);
-
-			gInstance.drawLine(pixel0.x, pixel0.y, pixel1.x, pixel1.y);
-
-		}
-
-	}
+public class FractalFrame extends JFrame
+{
+    private static final long serialVersionUID = 1L;
+    
+    private Fractal fractal;
+    private String name;
+    public FractalFrame(Fractal fractal, String name)
+    {
+        this.fractal = fractal;
+        this.name=name;
+        init();
+      
+    }
+    
+    private void init()
+    {
+        // initialize window size and position
+        setPreferredSize(new Dimension(640, 360));
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dim.getWidth() - getWidth()) / 4);
+        int y = (int) ((dim.getHeight() - getHeight()) / 4);
+        // note that we just divided by 4, that makes the screen to center 
+        setLocation(x, y);
+        
+        setTitle(this.name);
+        add(new FractalPanel(fractal)); // add the panel
+        pack();
+    }
 }

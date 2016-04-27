@@ -1,4 +1,4 @@
-package stock.price;
+package fr.ujm.curien.krr.stock.processor;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,6 +8,10 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.WindowConstants;
+
+import fr.ujm.curien.krr.stock.bean.Stock;
+import fr.ujm.curien.krr.stock.fractal.Fractal;
+import fr.ujm.curien.krr.stock.generator.main.MainGenerator;
 
 public class Generator extends Thread {
  double price;
@@ -35,7 +39,7 @@ public class Generator extends Thread {
                  for (int k=0; k < data.length;k++)
                  { double x= data[k]*10;
                 	 try {
-                		 TestGen.toStringQueue.put( new Stock(fractal.name, x+price, ThreadLocalRandom.current().nextDouble(1, 100)));
+                		 MainGenerator.toStringQueue.put( new Stock(fractal.name, x+price, ThreadLocalRandom.current().nextDouble(1, 100)));
                 	//	 TestGen.toStringQueue.put("event(rdf("+fractal.name+",hasStockPrice,"+ Double.toString(Math.floor((x+price) * 100) / 100 ) + "))");
 						//TestGen.toStringQueue.put( "<http://example/company#"+fractal.name +"> <http://example/price> \""+Double.toString(Math.floor((x+price) * 100) / 100 )+"\"^^<http://www.w3.org/2001/XMLSchema#double>");
 					} catch (InterruptedException e) {
@@ -45,7 +49,7 @@ public class Generator extends Thread {
                 	 }
                  try {
                 	 Stock eof=new Stock("finish", 1,"EOF",12);
-					TestGen.toStringQueue.put(eof);
+					MainGenerator.toStringQueue.put(eof);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

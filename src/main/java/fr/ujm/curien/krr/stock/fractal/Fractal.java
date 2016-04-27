@@ -1,4 +1,4 @@
-package stock.price;
+package fr.ujm.curien.krr.stock.fractal;
 
 /*
  * 2D Fractal Terrain Generator

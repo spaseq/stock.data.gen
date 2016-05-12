@@ -16,7 +16,7 @@ public class Writer implements Runnable {
 		// Initialize writer
 		try {
 			outputWriter = new BufferedWriter(new FileWriter(new File("stockdata.nt")));
-			outputWriter1 = new BufferedWriter(new FileWriter(new File("epstockdata.txt")));
+			outputWriter1 = new BufferedWriter(new FileWriter(new File("epstockdata.P")));
 		} catch (final IOException e) {
 			//// logger.error("Cannot open output file for " + id, e);
 			e.printStackTrace();
